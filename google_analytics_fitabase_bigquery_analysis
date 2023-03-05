@@ -1,0 +1,210 @@
+-- Setting variables for regular expression based analyses
+DECLARE
+TIMESTAMP_REGEX STRING DEFAULT r'^\d{4}-\d{1,2}-\d{1,2}[T]\d{1,2}:\d{1,2}:\d{1,2}(\.\d{1,6})? *(([+-]\d{1,2}(:\d{1,2})?)|Z|UTC)?$';
+DECLARE
+DATE_REGEX STRING DEFAULT
+r'^\d{4}-(?:[1-9]|0[1-9]|1[012])-(?:[1-9]|0[1-9]|[12][0-9]|3[01])$';
+DECLARE
+TIME_REGEX STRING DEFAULT r'^\d{1,2}:\d{1,2}:\d{1,2}(\.\d{1,6})?$';
+
+-- Setting variables for time of day/ day of week analyses
+DECLARE
+MORNING_START,
+MORNING_END,
+AFTERNOON_END,
+EVENING_END INT64;
+
+-- Set the times for the times of the day
+SET
+MORNING_START = 6;
+SET
+MORNING_END = 12;
+SET
+AFTERNOON_END = 18;
+SET
+EVENING_END = 21;
+
+-- Check to see which column names are shared across tables
+select
+column_name,
+count(table_name) as column_count
+from
+`portfolioproject-368918.fitabase_data.INFORMATION_SCHEMA.COLUMNS`
+group by
+1;
+
+-- Id column in each table? 1- TRUE 0-FALSE
+select
+table_name,
+sum(case
+when column_name = 'Id' then 1
+else 0
+end) as has_id_column
+from
+`portfolioproject-368918.fitabase_data.INFORMATION_SCHEMA.COLUMNS`
+group by 1
+order by 1 asc;
+
+-- This query checks to make sure that each table has a column of a date or time related type
+-- Proper if empty
+
+select
+table_name,
+sum(case
+when data_type in('TIMESTAMP', 'DATETIME', 'TIME', 'DATE') then 1
+else 0
+end) as has_time_info
+from
+`portfolioproject-368918.fitabase_data.INFORMATION_SCHEMA.COLUMNS`
+where 
+data_type in ('TIMESTAMP', 'DATETIME', 'TIME', 'DATE')
+group by 1
+having
+has_time_info = 0;
+
+-- If there is columns  with: DATETIME, TIMESTAMP, or DATE then check for its names
+
+select
+concat(table_catalog, '.', table_schema, '.', table_name) as table_path,
+table_name,
+column_name
+from
+`portfolioproject-368918.fitabase_data.INFORMATION_SCHEMA.COLUMNS`
+where 
+data_type in ('TIMESTAMP', 'DATETIME','DATE');
+
+
+-- Check for columns to merge in each table
+
+select
+table_name,
+column_name
+from
+`portfolioproject-368918.fitabase_data.INFORMATION_SCHEMA.COLUMNS`
+where
+regexp_contains(lower(column_name), 'date|minute|daily|hourly|day|seconds');
+
+
+-- Check if column is a valid timestamp column
+
+select
+ActivityDate,
+regexp_contains(string(ActivityDate), TIMESTAMP_REGEX) as is_timestamp
+from
+`portfolioproject-368918.fitabase_data.dailyActivity_merged`
+limit 5;
+
+
+-- Check if all columns follows timestamp pattern
+select
+case
+when min(regexp_contains(string(ActivityDate), TIMESTAMP_REGEX)) = true then
+"Valid"
+else
+"Not Valid"
+end as valid_test
+from
+`portfolioproject-368918.fitabase_data.dailyActivity_merged`;
+
+-- Find tables that might be at the day level
+select
+distinct table_name
+from
+`portfolioproject-368918.fitabase_data.INFORMATION_SCHEMA.COLUMNS`
+where
+regexp_contains(lower(table_name), "day|daily");
+
+-- Columns at tables
+
+select
+column_name,
+data_type,
+count(table_name) as table_count
+from
+`portfolioproject-368918.fitabase_data.INFORMATION_SCHEMA.COLUMNS`
+where
+regexp_contains(lower(table_name), "day|daily")
+group by
+1,2;
+
+-- Data types among tables
+
+select
+column_name,
+table_name,
+data_type
+from
+`portfolioproject-368918.fitabase_data.INFORMATION_SCHEMA.COLUMNS`
+where
+regexp_contains(lower(table_name), "day|daily")
+and column_name in (
+  select column_name
+  from 
+  `portfolioproject-368918.fitabase_data.INFORMATION_SCHEMA.COLUMNS`
+  where 
+  REGEXP_CONTAINS(lower(table_name), "day|daily")
+  group by 1
+  HAVING
+  count(table_name) >=2)
+order by
+1;
+
+-- Convert strings to dates and joing tables to check results
+
+select 
+A.Id,
+A.Calories,
+* except(Id,
+Calories,
+ActivityDay,
+SleepDay,
+SedentaryMinutes,
+LightlyActiveMinutes,
+FairlyActiveMinutes,
+VeryActiveMinutes,
+SedentaryActiveDistance,
+LightActiveDistance,
+ModeratelyActiveDistance,
+VeryActiveDistance),
+I.SedentaryMinutes,
+I.LightlyActiveMinutes,
+I.FairlyActiveMinutes,
+I.VeryActiveMinutes,
+I.SedentaryActiveDistance,
+I.LightActiveDistance,
+I.ModeratelyActiveDistance,
+I.VeryActiveDistance
+from
+`portfolioproject-368918.fitabase_data.dailyActivity_merged` A
+left join
+`portfolioproject-368918.fitabase_data.dailyCalories_merged` C
+on
+A.Id = C.Id
+and A.ActivityDate=C.ActivityDay
+left join
+`portfolioproject-368918.fitabase_data.dailyIntensities_merged` I
+on
+A.Id=C.Id
+and A.ActivityDate=C.ActivityDay
+and A.Calories=C.Calories
+and A.LightActiveDistance = I.LightActiveDistance
+and A.LightlyActiveMinutes = I.LightlyActiveMinutes
+and A.ModeratelyActiveDistance = I.ModeratelyActiveDistance
+and A.SedentaryActiveDistance = I.SedentaryActiveDistance
+and A.SedentaryMinutes = I.SedentaryMinutes
+and A.VeryActiveDistance = I.VeryActiveDistance
+and A.VeryActiveMinutes = I.VeryActiveMinutes
+left join
+`portfolioproject-368918.fitabase_data.dailySteps_merged` S
+on
+A.Id = S.Id
+and A.ActivityDate=S.ActivityDay
+left join
+`portfolioproject-368918.fitabase_data.sleepDay_merged` Sl
+on
+A.Id = Sl.Id
+and A.ActivityDate = safe.parse_date("%d%%m%%Y", Sl.SleepDay);
+
+-- select ID,SleepDay
+-- from 
+-- `portfolioproject-368918.fitabase_data.sleepDay_merged`
