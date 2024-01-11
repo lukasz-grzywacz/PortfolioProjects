@@ -13,47 +13,45 @@ This guide provides instructions for automating the transfer of datasets from Ka
 bash
 pip install kaggle snowflake-connector-python pandas
 
-#Configuration
+# Configuration
 
-##Kaggle API Credentials
+## Kaggle API Credentials
 - Obtain your API credentials (username and key) from your Kaggle account settings.
 ##Environment Variables
 - Optionally, set up environment variables for Kaggle and Snowflake credentials.
   
-##Kaggle API Setup in Python
+## Kaggle API Setup in Python
 import kaggle
 kaggle.api.authenticate()
 
-#Data Transfer Process
+# Data Transfer Process
 
-##Access Kaggle Dataset
+## Access Kaggle Dataset
 - Use Kaggle API to retrieve the dataset's direct download link.
-##Stream Dataset
+  
+## Stream Dataset
 import requests
 import pandas as pd
 response = requests.get("KAGGLE_DATASET_URL", stream=True)
 data = pd.read_csv(response.raw)
 
-##Data Processing (Optional)
+## Data Processing (Optional)
 - Process or transform the data as needed.
-##Connect to Snowflake
-
+  
+## Connect to Snowflake
 from snowflake.connector import connect
 conn = connect(user='YOUR_USER', password='YOUR_PASSWORD', account='YOUR_ACCOUNT')
 
-##Upload Data to Snowflake
-
+## Upload Data to Snowflake
 cursor = conn.cursor()
 - Example SQL command to upload data
 - cursor.execute("SQL_COMMAND")
 
-##Close Connections
-
+## Close Connections
 cursor.close()
 conn.close()
 
-##Important Notes
-
+## Important Notes
 - Ensure secure handling of all authentication and credentials.
 - Be mindful of API rate limits and data constraints on Kaggle and Snowflake.
 - Initially test with a smaller dataset to ensure smooth operation.
