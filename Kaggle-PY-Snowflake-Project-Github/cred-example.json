@@ -1,0 +1,15 @@
+{"secrets":
+  {
+    "account"   : "account",
+    "username"  : "username",
+    "warehouse" : "warehouse",
+    "role"      : "role",
+    "database"  : "database",
+    "schema"    : "",
+    "password"  : "password"
+  },
+  "kaggle":
+    {"username" : "username",
+     "key"      : "key"
+    }
+}
