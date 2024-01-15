@@ -19,6 +19,7 @@ pip install kaggle snowflake-connector-python pandas
 - Obtain your API credentials (username and key) from your Kaggle account settings.
 ##Environment Variables
 - Optionally, set up environment variables for Kaggle and Snowflake credentials.
+- insert into cred.json
   
 ## Kaggle API Setup in Python
 import kaggle
@@ -28,19 +29,14 @@ kaggle.api.authenticate()
 
 ## Access Kaggle Dataset
 - Use Kaggle API to retrieve the dataset's direct download link.
-  
-## Stream Dataset
-import requests
-import pandas as pd
-response = requests.get("KAGGLE_DATASET_URL", stream=True)
-data = pd.read_csv(response.raw)
+
 
 ## Data Processing (Optional)
 - Process or transform the data as needed.
   
 ## Connect to Snowflake
-from snowflake.connector import connect
-conn = connect(user='YOUR_USER', password='YOUR_PASSWORD', account='YOUR_ACCOUNT')
+- find at snowflake admin database (manual or ChatGTP can help)
+- insert into cred.json
 
 ## Upload Data to Snowflake
 cursor = conn.cursor()
