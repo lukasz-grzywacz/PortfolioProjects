@@ -36,6 +36,7 @@ kaggle.api.authenticate()
   
 ## Connect to Snowflake
 - find at snowflake admin database (manual or ChatGTP can help)
+- "schema" can be null
 - insert into cred.json
 
 ## Upload Data to Snowflake
