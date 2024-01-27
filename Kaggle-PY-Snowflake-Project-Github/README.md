@@ -2,6 +2,8 @@
 
 This guide provides instructions for automating the transfer of datasets from Kaggle to Snowflake using Python. It involves streaming datasets directly from Kaggle into a Python script and then uploading them to Snowflake.
 
+My Medium post about this project https://medium.com/@datawithlu/kaggle-dataset-to-snowflake-database-automation-etl-38d85676fe42
+
 ## Prerequisites
 - Kaggle Account: Sign up or log in at [Kaggle](https://www.kaggle.com/).
 - Snowflake Account: Sign up or log in at [Snowflake](https://www.snowflake.com/).
