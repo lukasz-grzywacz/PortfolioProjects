@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name | Data Engineer</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2em;
+            text-align: center;
+        }
+        .header {
+            margin-top: 50px;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 0.2em;
+            color: #fff;
+            transition: color 0.3s ease;
+        }
+        h1:hover {
+            color: #ff6666;
+        }
+        h2 {
+            font-size: 1.5em;
+            color: #aaa;
+            margin-bottom: 1em;
+        }
+        .intro {
+            font-size: 1.2em;
+            color: #bbb;
+            line-height: 1.8;
+            margin-bottom: 2em;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .skills {
+            margin-top: 3em;
+            text-align: left;
+        }
+        .skills h2 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 1.5em;
+        }
+        .skill-item {
+            margin-bottom: 1.2em;
+            font-size: 1.1em;
+            color: #ccc;
+        }
+        .projects {
+            margin-top: 3em;
+            text-align: left;
+        }
+        .project-item {
+            background-color: #1f1f1f;
+            padding: 2em;
+            margin-bottom: 2em;
+            border-radius: 8px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        .project-item:hover {
+            transform: translateY(-5px);
+            background-color: #272727;
+        }
+        .project-title {
+            font-size: 1.8em;
+            color: #fff;
+            margin-bottom: 0.5em;
+        }
+        .project-description {
+            font-size: 1.1em;
+            color: #ccc;
+            line-height: 1.6;
+        }
+        .experience {
+            margin-top: 3em;
+            text-align: left;
+        }
+        .experience h2 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 1.5em;
+        }
+        .experience-item {
+            margin-bottom: 1.5em;
+            font-size: 1.1em;
+            color: #ccc;
+        }
+        .experience-item h3 {
+            margin-bottom: 0.5em;
+            color: #ff6666;
+        }
+        footer {
+            margin-top: 4em;
+            font-size: 0.9em;
+            color: #777;
+            border-top: 1px solid #333;
+            padding-top: 1em;
+        }
+        a {
+            color: #ff6666;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .button {
+            display: inline-block;
+            padding: 0.5em 1.5em;
+            background-color: #ff6666;
+            color: #fff;
+            border-radius: 25px;
+            margin-top: 1em;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #ff4747;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Łukasz Grzywacz</h1>
+            <h2>Data Analyst</h2>
+            <p class="intro">I am a passionate Data Analyst specializing in building scalable data automations and systems that transform raw data into valuable insights. With expertise in modern data technologies, I help organizations make data usable.</p>
+            <a href="#contact" class="button">Get in Touch</a>
+        </div>
+
+        <div class="skills" id="skills">
+            <h2>Key Skills</h2>
+            <div class="skill-item">Data Integration Tools: SSIS, SSRS, Azure Data Factory</div>
+            <div class="skill-item">Programming Languages: Python, SQL</div>
+            <div class="skill-item">Data Analysis and Reporting: Power BI, Excel, Power Query</div>
+            <div class="skill-item">Cloud Platforms: Azure, Snowflake</div>
+            <div class="skill-item">Database Management: SQL Server, MySQL</div>
+        </div>
+
+        <div class="projects" id="projects">
+            <h2>Selected Projects</h2>
+            
+            <div class="project-item">
+                <a href = "https://notes-portal-5b1f1c5bb96c.herokuapp.com" target="_blank">
+                <div class="project-title">Notes Portal – eBook annotations Kobo to Notion importer</div>
+                <div class="project-description">
+                    Developed a web app using Python, Flask, SQLite, Heroku. Features include login/signup, EPUB 
+                      file conversion, and integration with Notion via API.<br>
+                </div>
+                </a>
+            </div>
+            
+            <div class="project-item">
+                <a href = "https://github.com/xluki3/PortfolioProjects/tree/main/Kaggle-PY-Snowflake-Project-Github" target="_blank">
+                <div class="project-title">Kaggle to Snowflake – ETL process</div>
+                <div class="project-description">
+                    Designed an ETL process with Python to extract data from Kaggle API, load it into Snowflake
+                    Cloud, and perform data analysis using Pandas, Matplotlib, Sklearn, and Numpy. <br>
+               </div>
+            </a>
+            </div>
+            
+            <div class="project-item">
+                <a href="https://medium.com/@datatechflow" target="_blank">
+                <div class="project-title">
+                    DataTechFlow – Medium Blog
+                </div>
+                <div class="project-description">
+                    Launched a blog sharing news and tips on data, AI, technology, and productivity.</div>
+            </div>
+            </a>
+        </div>
+
+        <div class="experience" id="experience">
+            <h2>Professional Experience</h2>
+            <div class="experience-item">
+                <h3>Analyst | Smartney Grupa Oney S.A.</h3>
+                <p>May 2023 - Present</p>
+                <p>Automated Processes: Streamlined 50+ controls using Excel, Power Query, and SQL, cutting down control time by 70%.
+                    SQL Reporting: Introduced automated SQL job mail reporting, significantly reducing manual workload.
+                    Dashboard Development: Built 4 automated dashboards with Excel, Power BI, and SQL, slashing reports preparation time.
+                    Training & Mentorship: Provided SQL training to 15 employees, enhancing team skills and efficiency.</p>
+            </div>
+            <div class="experience-item">
+                <h3>Junior SQL Developer | LINK GROUP Sp. z o.o.</h3>
+                <p>May 2024 - September 2024</p>
+                <p>Data Mapping & Extraction
+                    ETL Processes
+                    Data Warehousing
+                    SQL & Database Management
+                    Reporting & Data Visualization (Power BI, Excel)
+                    Process Automation</p>
+            </div>
+            <div class="experience-item">
+                <h3>SQL Developer | CETES Cosmetics Poland Sp. z o.o.</h3>
+                <p>August 2022 - Present</p>
+                <p>Efficiency Projects: Developed SQL-based solutions that improved operational efficiency for employees and managers.
+                    Database Management: Created 100+ stored procedures/functions and designed multiple database schemas from scratch.
+                    Legal Compliance: Generated XML files using SQL for regulatory compliance.
+                    Automation: Developed a Python-based tool for automating PDF document conversion.</p>
+            </div>
+        </div>
+        
+        <footer id="contact">
+            <p>Connect with me on <a href="https://www.linkedin.com/in/lukasz-grzywacz-in/">LinkedIn</a> | <a href="mailto:lukaszgrzywaczcontact@gmail.com">Email Me</a> | <a href="https://github.com/xluki3/PortfolioProjects">Github</a></p>
+        </footer>
+    </div>
+
+</body>
+</html>
